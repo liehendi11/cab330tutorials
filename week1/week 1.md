@@ -209,7 +209,7 @@ PVA97NK dataset is about a national veterans’ organization that seeks to bette
 
 The PVA97NK dataset contains 29 variables including identifiers, demographics of members, donation history of members, etc. In the upcoming weeks, we aim to predict TARGETB, a binary variable corresponding to whether or not someone responded to the greeting card mailing sent in June, 1997.
 
-## End Notes and Next Week
+## End notes and next week
 This week, we learned how to install Python and its libraries in a virtual enviroment. We also learned about the typical data mining process flow in Python and explored a bit of the dataset to understand why we are performing data mining on it.
 
 Next week, we will focus on exploring trends and performing data cleaning/preprocessing on the PVA97NK dataset.
