@@ -116,7 +116,7 @@ pip install ipython pandas sklearn matplotlib numpy seaborn nltk
 ```
 
 ## 3. Process flow for predictive mining using Python<a name="processflow"></a>
-![Predictive mining process flow in Python](/home/hendi/Documents/Tutoring/dataminingtutorialsresources/process_flow_python.png  "Predictive mining process flow in Python")
+![Predictive mining process flow in Python](https://s3-ap-southeast-2.amazonaws.com/dataminingtuts/process_flow_python.png  "Predictive mining process flow in Python")
 
 The diagram above presents the steps we will take in this unit to perform predictive mining on the dataset. The first and most important step is to define problem and purpose of the data mining. You need to ask questions such as:
 
