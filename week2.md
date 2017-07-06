@@ -3,7 +3,7 @@
 ### What's on this week
 1. [Resuming from week 1](#resume)
 2. [Exploring data](#explore)
-3. [Modifying and correcting data](#processflow)
+3. [Modifying and correcting data](#moddata)
 ---
 
 The practical note for this week introduces you to data preparation using Python and the libraries we installed last week. Data preparation is the most important step in any data mining project and it determines the "make or break" of a data mining project. In a real-life project, 70-80% of your time will be spent on this step.
@@ -75,180 +75,218 @@ The dataframe info reveals a number of important information from our dataset:
 2. Number of fields (or columns): 28
 3. Number of entries and data type for each column: 9686 entries and integer number for Target B; 7906 entries and floating point for GiftAvgCard36.
 
+###2.1. Taking a closer look on each column
 
+Let's take a closer look on each column. Take "DemAge" column for example. To grab an overall knowledge of the column, we can use the ```.describe()``` method.
 
-### 2.1. For Windows Users
-
-((to do for windows users))
-
-Google "Python 3" and download it from the official website.
-
-### 2.2. For Linux Users
-
-Ubuntu/Linux Mint users are covered in this section. Typically, Python 3 comes pre-packaged with your distro installation. To check, write:
-
-``` bash
-whereis python3
-```
-
-Which should return the location of Python 3 binaries in your system
-``` bash
-python3: /usr/bin/python3 /usr/bin/python3.5m /usr/bin/python3.5 /usr/lib/python3 /usr/lib/python3.5 /etc/python3 /etc/python3.5 /usr/local/lib/python3.5 /usr/include/python3.5m /usr/share/python3 /usr/share/man/man1/python3.1.gz
-```
-
-If this is not the case with your system, please read section 2.2.1. Otherwise, you can skip to section 2.2.2.
-
-#### 2.2.1. Download and install Python
-Using your distro's package manager, download and install Python3. In Ubuntu/Linux Mint/Debian-based distros, type the following lines in your terminal
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install python3
-```
-
-We also need to install additional libraries such as pip (Python's package manager).
-```bash
-sudo apt-get install python3-pip
-sudo apt-get install build-essential libssl-dev libffi-dev python-dev
-```
-
-#### 2.2.2. Setting up virtual environment
-Virtual environments enable you to have an isolated space for your Python projects, ensuring that each of your projects won't disrupt each other. This allows greater control over our Python projects and over how different versions of packages are handled. You can have as many virtual environments as you want.
-
-We need to first install the venv module. Let's do it by typing:
-```bash
-sudo apt-get install python3-venv
-```
-
-Once installed, we need to create environments. Choose which directory you would like to put the projects of this units in, or you could make a new one
-```bash
-mkdir /dir/to/your/project
-cd /dir/to/your/project
-```
-
-After you are in the directory, you can create an environment by running:
-```bash
-python3 -m venv my_env
-```
-
-This command creates a new directory that specifies the virtual environment. To activate it, type the following command:
-```bash
-source my_env/bin/activate
-```
-
-Your prompt will now be prefixed with the name of your environment, which in this case is called **my_env**. It should looks like this:
-```bash
-(my_env) hendi@hendi-HP-Pavilion-15-Notebook-PC ~/Documents/Tutoring/dataminingtutorials/week1 $
-```
-
-Within the virtual environment, you can use the command ```python``` instead of ```python3``` and pip instead of ```pip3```. If you use Python 3 outside of the environment, you would need to use ```python3``` and ```pip3``` commands as ```python``` and ```pip``` refers to the Python 2 packages.
-
-
-**NOTE:** You need to activate the virtual environment everytime you open a new terminal session to work on this directory. Otherwise, all libraries and setting you set up in the virtual environment would not be applied.
-
-#### 2.2.2. Install machine learning packages
-To install the libraries that we will use in this unit, we can use ```pip``` package manager by typing:
-```bash
-pip install ipython pandas sklearn matplotlib numpy seaborn nltk
-```
-
-## 3. Process flow for predictive mining using Python<a name="processflow"></a>
-![Predictive mining process flow in Python](/home/hendi/Documents/Tutoring/dataminingtutorialsresources/process_flow_python.png  "Predictive mining process flow in Python")
-
-The diagram above presents the steps we will take in this unit to perform predictive mining on the dataset. The first and most important step is to define problem and purpose of the data mining. You need to ask questions such as:
-
-* What kind of data do we have?
-* Why are we performing predictive mining on this data?
-* What information are we trying to predict?
-* How could the stakeholders (including yourself) use the insights we gained from the data mining?
-
-After we understand the problem and purpose of the data mining process, next step is to explore the data. In this step, we try to understand patterns and distributions in the data. We should also identifies problems in the dataset, such as noise and missing values, to be cleaned and processed out in the next step. Both steps will be performed mainly using ```pandas``` with some help from ```sklearn```'s preprocessing modules.
-
-Once the data is clean, it can be used to built predictive models. There are many algorithms available in ```sklearn```, each with its own characteristics. We will explore one algorithm at a time in the upcoming weeks.
-
-In all stages, we also need to visualize the patterns and trends found in the data. Visualization allows us to understand the data better. In this unit, all visualizations will be done using ```seaborn``` and ```matplotlib``` with data presented by ```pandas``` dataframes.
-
-
-## 4. Interactive prototyping with ipython<a name="ipython"></a>
-
-```ipython``` is an interactive Python shell designed for fast prototyping. In data mining/machine learning, many engineers use ipython to quickly review the data and process they are working on. We can call ipython the same way as we call the python interpreter itself:
-
-```bash
-ipython
-```
-
-```bash
-# Output
-Python 3.5.2 (default, Nov 17 2016, 17:05:23) 
-Type 'copyright', 'credits' or 'license' for more information
-IPython 6.1.0 -- An enhanced Interactive Python. Type '?' for help.
-
-In [1]: 
-```
-
-All examples in this unit are shown using ipython console.
-
-## 5. Defining problem and purpose of data mining process<a name="purpose"></a>
-
-Let's start the data mining process by defining why we are performing data mining on this data. To do this, we need to take a look on the supplied **pva97nk** data.
-
-Start by importing the dataset into our ipython console. We will use pandas for this purpose.
 ```python
 # input
-import pandas as pd
-df = pd.read_csv('path/to/your/pva97nk.csv')
-```
-
-Once the dataset is imported, let's see what information it has.
-```python
-# input
-df.info()
+print(df['DemAge'].describe())
 ```
 
 ```python
 #output
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 9686 entries, 0 to 9685
-Data columns (total 28 columns):
-TargetB             9686 non-null int64
-ID                  9686 non-null int64
-TargetD             4843 non-null float64
-GiftCnt36           9686 non-null int64
-GiftCntAll          9686 non-null int64
-GiftCntCard36       9686 non-null int64
-GiftCntCardAll      9686 non-null int64
-GiftAvgLast         9686 non-null float64
-GiftAvg36           9686 non-null float64
-GiftAvgAll          9686 non-null float64
-GiftAvgCard36       7906 non-null float64
-GiftTimeLast        9686 non-null int64
-GiftTimeFirst       9686 non-null int64
-PromCnt12           9686 non-null int64
-PromCnt36           9686 non-null int64
-PromCntAll          9686 non-null int64
-PromCntCard12       9686 non-null int64
-PromCntCard36       9686 non-null int64
-PromCntCardAll      9686 non-null int64
-StatusCat96NK       9686 non-null object
-StatusCatStarAll    9686 non-null int64
-DemCluster          9686 non-null int64
-DemAge              7279 non-null float64
-DemGender           9686 non-null object
-DemHomeOwner        9686 non-null object
-DemMedHomeValue     9686 non-null int64
-DemPctVeterans      9686 non-null int64
-DemMedIncome        9686 non-null int64
-dtypes: float64(6), int64(19), object(3)
-memory usage: 2.1+ MB
+count    7279.000000
+mean       59.150845
+std        16.516400
+min         0.000000
+25%        47.000000
+50%        60.000000
+75%        73.000000
+max        87.000000
+Name: DemAge, dtype: float64
 ```
 
-PVA97NK dataset is about a national veterans’ organization that seeks to better target its solicitations for donation. By only soliciting the most likely donors, less money will be spent on solicitation efforts and more money will be available for charitable concerns. Of particular interest is the class of individuals identified as lapsing donors. The organization seeks to classify its lapsing donors based on their responses to a greeting card mailing and calls it as the 97NK Campaign. With this classification, a decision can be made to either solicit or ignore a lapsing individual in next year campaign.
+If we want to check the unique values and how many records for each value, we could use ```.unique()``` and ```.value_counts()``` method.
 
-The PVA97NK dataset contains 29 variables including identifiers, demographics of members, donation history of members, etc. In the upcoming weeks, we aim to predict TARGETB, a binary variable corresponding to whether or not someone responded to the greeting card mailing sent in June, 1997.
+```python
+# input
+print(df['DemAge'].unique())
+```
+```python
+#output
+array([ nan,  67.,  53.,  47.,  58.,  39.,  50.,  45.,  80.,  61.,  76.,
+        41.,  75.,  59.,  51.,  31.,  54.,  70.,  42.,  65.,  81.,  38.,
+        56.,  69.,  52.,  33.,  73.,  71.,  29.,  60.,  83.,  43.,  35.,
+        77.,  44.,  72.,  64.,  34.,  55.,  37.,  57.,  46.,  49.,  32.,
+        66.,  87.,  40.,  79.,  25.,  63.,  62.,  48.,  68.,  86.,  23.,
+        27.,  74.,  78.,  85.,  26.,   7.,  36.,  82.,  24.,  17.,  30.,
+        84.,  21.,  28.,  22.,  19.,  16.,  14.,   6.,   0.,   2.,  20.,
+        18.,  15.,   4.])
+```
+```python
+# how many records for each value
+print(df['DemAge'].value_counts())
+```
+```python
+#output
+73.0    216
+67.0    215
+75.0    203
+49.0    201
+57.0    187
+77.0    183
+55.0    182
+65.0    181
+47.0    179
+69.0    178
+71.0    173
+51.0    167
+79.0    165
+45.0    164
+74.0    162
+53.0    152
+59.0    150
+76.0    139
+43.0    138
+63.0    138
+81.0    136
+61.0    136
+50.0    131
+37.0    125
+41.0    124
+78.0    123
+80.0    123
+72.0    122
+70.0    116
+68.0    116
+       ... 
+84.0     70
+27.0     69
+86.0     68
+33.0     65
+31.0     59
+36.0     57
+38.0     53
+17.0     46
+34.0     42
+29.0     33
+7.0      32
+32.0     31
+30.0     24
+26.0     19
+28.0     19
+25.0     17
+23.0     12
+22.0      7
+24.0      6
+16.0      5
+21.0      5
+19.0      4
+6.0       3
+14.0      1
+0.0       1
+2.0       1
+20.0      1
+4.0       1
+18.0      1
+15.0      1
+Name: DemAge, Length: 79, dtype: int64
+```
+From these outputs, we reveals a number of data problems with "DemAge" column.
+
+1. There are only 7279 records in "DemAge" column, while the total number of records in this data set is 9686. This indicates missing values in "DemAge". This observation is also visible through the NaN printed by ```.unique()``` method.
+2. One record in "DemAge" has 0 as value. It indicates an errorneous data in this column.
+
+We will rectify these problems later in section 3.
+
+Could you spot data problems in other columns using ```.describe()```, ```.unique()``` and ```.value_counts()```?
+
+### 2.2. Grouping and plotting distributions of columns
+Another way to gain more insights of the data is by grouping and comparing and plotting their distribution.
+
+We could perform grouping using ```.groupby()``` method. Grouping is commonly used to see whether there is a trend between two or more different fields. For example, let's check whether there is a specific correlation between age (DemAge) and tendency to be a lapsing donor (TargetB).
+```python
+#input
+print(df.groupby(['TargetB'])['DemAge'].mean())
+```
+```python
+#output
+TargetB
+0    58.304444
+1    59.979070
+Name: DemAge, dtype: float64
+```
+
+We could see that average age of lapsing donors is slightly higher than the non-lapsing donors.
+
+Other than ```.mean()```, we could also perform grouping with other method such as ```.value_counts()``` and ```.median()```.
+
+```python
+#input
+print(df.groupby(['TargetB'])['DemGender'].value_counts())
+```
+
+```python
+#output
+0        F            2614
+         M            1963
+         U             266
+1        F            2609
+         M            1962
+         U             272
+Name: DemGender, dtype: int64
+```
+While all of the methods we have used so far are very useful in providing information about the data, data mining professionals commonly visualize these information in charts for easier presentation. In python, we could do that using ```seaborn``` and ```matplotlib``` library.
+
+Firstly, let's import them.
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+A very common information to visualize is distribution of a field/column. There are a number options to do it in seaborn/matplotlib. For interval/numerical variables, we could use `distplot`. Let's try that for "DemAge". `distplot` is sensitive towards missing values (which are present in "DemAge"), thus we have to drop them using `dropna()` method.
+
+```python
+# input
+# dropna is used because 'DemAge' has missing values
+dg = sns.distplot(df['DemAge'].dropna())
+plt.show()
+```
+![DemAge distribution](http://dataminingtuts.s3.amazonaws.com/week2_dem_age_dist.png  "DemAge distribution")
+
+For nominal/categorical variables, we can use `countplot` to build a bar chart to show distribution of each values.
+
+```python
+# input
+dg = sns.countplot(data=df, x='DemGender')
+plt.show()
+```
+![DemGender distribution](http://dataminingtuts.s3.amazonaws.com/week2_dem_gender_dist.png  "DemGender distribution")
+
+Could you visualize other columns using `distplot` and `countplot`?
+
+## 3. Modifying and Correcting Data<a name="moddata"></a>
+
+``` python
+# impute missing values in DemAge with its mean
+df['DemAge'].fillna(df['DemAge'].mean(), inplace=True)
+
+# change DemCluster from interval/integer to nominal/str
+df['DemCluster'] = df['DemCluster'].astype(str)
+
+# change DemHomeOwner into binary 0/1 variable
+dem_home_owner_map = {'U':0, 'H': 1}
+df['DemHomeOwner'] = df['DemHomeOwner'].map(dem_home_owner_map)
+
+# denote miss values in DemMidIncome
+temp = df['DemMedIncome']
+temp[temp < 1] = 0
+df['DemMedIncome'] = temp
+
+df['DemMidIncome'].replace(0, np.nan, inplace=True)
+
+# impute med income using average strategy
+df['DemMedIncome'].fillna(df['DemMedIncome'].mean(), inplace=True)
+
+# impute gift avg card 36 using average strategy
+df['GiftAvgCard36'].fillna(df['GiftAvgCard36'].mean(), inplace=True)
+
+# drop ID and the unused target variable
+df.drop(['ID', 'TargetD'], axis=1, inplace=True)
+```
 
 ## End notes and next week
-This week, we learned how to install Python and its libraries in a virtual enviroment. We also learned about the typical data mining process flow in Python and explored a bit of the dataset to understand why we are performing data mining on it.
+This week, we learned how to use Python `pandas` to perform data cleaning and preprocessing. We also learned about basic `seaborn` and `matplotlib` methods for visualizing data distribution in a column.
 
-Next week, we will focus on exploring trends and performing data cleaning/preprocessing on the PVA97NK dataset.
+Next week, we will focus on performing predictive classification modelling using decision trees.
 
