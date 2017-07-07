@@ -56,7 +56,7 @@ temp = df['DemMedIncome']
 temp[temp < 1] = 0
 df['DemMedIncome'] = temp
 
-df['DemMidIncome'].replace(0, np.nan, inplace=True)
+df['DemMedIncome'].replace(0, np.nan, inplace=True)
 
 # impute med income using average strategy
 df['DemMedIncome'].fillna(df['DemMedIncome'].mean(), inplace=True)
