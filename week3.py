@@ -4,38 +4,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.model_selection import GridSearchCV
+from dm_tools import data_prep
+import pydot
+from io import StringIO
+from sklearn.tree import export_graphviz
 
-# read the pva97nk dataset
-df = pd.read_csv('pva97nk.csv')
+# preprocessing step
 
-# drop ID and the unused target variable
-df.drop(['ID', 'TargetD'], axis=1, inplace=True)
-
-# impute missing values in DemAge with its mean
-df['DemAge'].fillna(df['DemAge'].mean(), inplace=True)
-
-# change DemCluster from interval/integer to nominal/str
-df['DemCluster'] = df['DemCluster'].astype(str)
-
-# change DemHomeOwner into binary 0/1 variable
-dem_home_owner_map = {'U': 0, 'H': 1}
-df['DemHomeOwner'] = df['DemHomeOwner'].map(dem_home_owner_map)
-
-# denote miss values in DemMidIncome
-temp = df['DemMedIncome']
-temp[temp < 1] = 0
-df['DemMedIncome'] = temp
-
-df['DemMedIncome'].replace(0, np.nan, inplace=True)
-
-# impute med income using average strategy
-df['DemMedIncome'].fillna(df['DemMedIncome'].mean(), inplace=True)
-
-# impute gift avg card 36 using average strategy
-df['GiftAvgCard36'].fillna(df['GiftAvgCard36'].mean(), inplace=True)
-
-# one hot encoding
-df = pd.get_dummies(df)
+df = data_prep()
 
 # train test split
 y = df['TargetB']
@@ -45,7 +21,6 @@ X_train, X_test, y_train, y_test = train_test_split(X_mat, y, test_size=0.5, ran
 
 # simple decision tree training
 model = DecisionTreeClassifier()
-model.train(X_train, y_train)
 model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
@@ -93,3 +68,11 @@ indices = np.flip(indices, axis=0)
 
 for i in indices:
     print(names[i], ':', importances[i])
+
+
+# visualize
+model = cv.best_estimator_
+dotfile = StringIO()
+export_graphviz(model, out_file=dotfile, feature_names=names)
+graph = pydot.graph_from_dot_data(dotfile.getvalue())
+graph[0].write_png("week3_dt_viz.png")
